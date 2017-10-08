@@ -3,6 +3,20 @@
         <title>Data Carver</title>
     </head>
     <style>
+        @font-face {
+            font-family: Raleway;
+            src: url("fonts/Raleway.ttf");
+        }
+
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
 
         .leftnav .contents {
             display: flex;
@@ -20,6 +34,11 @@
         .contents a {
             text-decoration: none;
             color: black;
+            font-family: "Raleway";
+        }
+
+        .contents a:hover {
+            color: white;
         }
 
         .container ul {
@@ -27,12 +46,45 @@
             flex-direction: row;
             justify-content: flex-start;
             list-style-type: none;
+            flex-wrap: wrap;
         }
 
         .container ul li {
-            margin: 50px;
+            margin: 10px;
+            background-color: cadetblue;
+            padding: 20px;
         }
 
+        .container ul li:hover {
+            background-color: black;
+        }
+
+        .container ul li a {
+            text-decoration: none;
+            font-family: "Raleway";
+            font-weight: bold;
+            color: white;
+        }
+
+        #filebuttons button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            font-family: "Raleway";
+            border: none;
+            cursor: pointer;
+        }
+
+        #filebuttons a {
+           cursor: pointer;
+        }
+
+        #filebuttons #delete:hover {
+            background-color: #ff6347;
+        }
+
+        #filebuttons #edit:hover {
+            background-color: #98ff98;
+        }
 
     </style>
 
@@ -65,9 +117,9 @@
                 {% for filesig in all_filesigs %}
                 <li>
                     <a href="/datacarver/{{ filesig.id }}">{{ filesig.filetype }}</a>
-                    <div>
-                        <button>Delete</button>
-                        <button>Edit</button>
+                    <div id="filebuttons">
+                        <a href="#"><button id="delete">Delete</button></a>
+                        <a href="#"><button id="edit">Edit</button></a>
                     </div>
                 </li>
                 {% endfor %}

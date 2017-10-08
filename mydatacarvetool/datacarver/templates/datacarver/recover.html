@@ -22,29 +22,50 @@
 
     <style>
 
-         .leftnav .contents {
+         @font-face {
+            font-family: Raleway;
+            src: url("fonts/Raleway.ttf");
+        }
+
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+
+        .leftnav .contents {
             display: flex;
             flex-direction: row;
             justify-contents: flex-start;
             text-decoration: none;
             background-color: cadetblue;
 
-         }
+        }
 
-         .contents div {
+        .contents div {
             margin: 10px 15px;
-         }
+        }
 
-         .contents a {
+        .contents a {
             text-decoration: none;
             color: black;
-         }
+            font-family: "Raleway";
+        }
+
+        .contents a:hover {
+            color: white;
+        }
 
         form div {
             margin: 10px 15px;
         }
 
         .container {
+            font-family: Raleway;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,6 +79,8 @@
 
         .buttons button, .buttons input {
             margin: 15px;
+            font-family: Raleway;
+            cursor: pointer;
         }
     </style>
     <body>
@@ -109,7 +132,9 @@
             </form>
         </div>
         <div class="filechooser">
-            HI this is filechooser
+            <div class="">
+
+            </div>
         </div>
     </body>
 </html>
