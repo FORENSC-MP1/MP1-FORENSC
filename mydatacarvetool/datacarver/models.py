@@ -11,6 +11,7 @@ class Filesig(models.Model):
     
     def __str__(self):
         return self.filetype
+
 class information(models.Model):
     dircopy = models.CharField(max_length=50)
     dirsave = models.CharField(max_length=50)

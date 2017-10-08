@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>Recover Files</title>
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            $(".filechooser").hide();
+
+            $(document).on('click', '#choosebutton', function(){
+                unhide();
+            });
+
+        });
+
+        function unhide(){
+            $(".recover-container").hide();
+            $(".filechooser").show();
+        }
+
+    </script>
+
+    <style>
+
+         .leftnav .contents {
+            display: flex;
+            flex-direction: row;
+            justify-contents: flex-start;
+            text-decoration: none;
+            background-color: cadetblue;
+
+         }
+
+         .contents div {
+            margin: 10px 15px;
+         }
+
+         .contents a {
+            text-decoration: none;
+            color: black;
+         }
+
+        form div {
+            margin: 10px 15px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .buttons button, .buttons input {
+            margin: 15px;
+        }
+    </style>
+    <body>
+        <div class="navbar-container">
+            <div class="navbar">
+                <div class="leftnav">
+                    <div class="contents">
+                        <a href="/datacarver/recover/"><div>
+                        Recover
+                        </div></a>
+                        <a href="/datacarver/"><div>
+                        View All
+                        </div></a>
+                        <a href="#"><div>
+                        Add Files
+                        </div></a>
+                    </div>
+                </div>
+                <div class="rightnav"></div>
+
+            </div>
+        </div>
+        <div class="recover-container">
+            <form>
+                <div class = "container">
+                    <div>Copy From: <br>
+                    <input type="text" name="copy"></div>
+
+                    <div>Save To: <br>
+                    <input type="text" name="save"></div>
+
+                    <div>Sectors: <br>
+                    <input type="text" name="sectors"></div>
+
+                    <div>Max File Size: <br>
+                    <input type="text" name="maxsize"></div>
+
+                    <div>Threads: <br>
+                    <input type="text" name="threads"></div>
+
+                    <div>Workers: <br>
+                    <input type="text" name="workers"></div>
+                </div>
+
+                <div class="buttons">
+                    <a href= "#" id="choosebutton"><input type="button" value="Choose File Extension"></a>
+                    <a href="#"><input type="submit" value="Submit"></a>
+                </div>
+            </form>
+        </div>
+        <div class="filechooser">
+            HI this is filechooser
+        </div>
+    </body>
+</html>

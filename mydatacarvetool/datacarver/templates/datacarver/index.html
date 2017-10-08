@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Data Carver</title>
+    </head>
+    <style>
+
+        .leftnav .contents {
+            display: flex;
+            flex-direction: row;
+            justify-contents: flex-start;
+            text-decoration: none;
+            background-color: cadetblue;
+
+        }
+
+        .contents div {
+            margin: 10px 15px;
+        }
+
+        .contents a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .container ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            list-style-type: none;
+        }
+
+        .container ul li {
+            margin: 50px;
+        }
+
+
+    </style>
+
+    <body>
+
+    <div class="navbar-container">
+        <div class="navbar">
+            <div class="leftnav">
+                <div class="contents">
+                    <a href="/datacarver/recover/"><div>
+                    Recover
+                    </div></a>
+                    <a href="/datacarver/"><div>
+                    View All
+                    </div></a>
+                    <a href="#"><div>
+                    Add Files
+                    </div></a>
+                </div>
+            </div>
+            <div class="rightnav">
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        {% if all_filesigs %}
+            <ul>
+                {% for filesig in all_filesigs %}
+                <li>
+                    <a href="/datacarver/{{ filesig.id }}">{{ filesig.filetype }}</a>
+                    <div>
+                        <button>Delete</button>
+                        <button>Edit</button>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>No files to display</h2>
+        {% endif %}
+    </div>
+    </body>
+
+
+</html>
