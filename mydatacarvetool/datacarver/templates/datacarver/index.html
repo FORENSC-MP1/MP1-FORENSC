@@ -152,9 +152,9 @@
             cursor: pointer;
         }
 
-    #add
+        #add
         {
-            background-color: aliceblue;
+
             width:100%;
             height:50%;
         }
@@ -340,7 +340,7 @@
                         {{ filesig.filetype }}
                         <div id="filebuttons">
                             <a href="?filesigid={{filesig.id}}"><button id="delete">Delete</button></a>
-                            <a href="#"><button id="edit">Edit</button></a>
+                            <a href="?editid={{filesig.id}}"><button id="edit">Edit</button></a>
                         </div>
                     </li>
                 </a>
@@ -353,6 +353,7 @@
     <div id="openModal1" class="modalDialog">
         <div>
             <a href="#x" title="Close" class="x"><span class="close2">&times;</span></a>
+             <h2>Create File Signature</h2>
             <div id=add>
                 <form action="{% url 'datacarver:addfsig'  %}" method="POST" >
                     {% csrf_token %}
@@ -384,10 +385,39 @@
                 <form action="" method="GET" >
 
                     <div id = "btn2">
-                        <div>Confirmation to delete the file signature</div>
+                        <h2>Confirmation to delete the file signature</h2>
                         <button  class="btnacc" name="Yes" value="{{deletefilesig.id}}" type="submit" style="margin-bottom:2.5em; margin-left: 4em;" onclick="closeModal()" >Yes</button>
 
                        <div class="btndec" onclick="closeModal();">No</div>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    <div id="openModal3" class="modalDialog">
+        <div>
+            <a href="#x" title="Close" class="x"><span class="close2">&times;</span></a>
+             <h2>Edit File Signature</h2>
+            <div id=add>
+
+                <form action="{% url 'datacarver:editfsig' %}" method="POST" >
+                    {% csrf_token %}
+                    <div class="header">Header:
+                    <input type="text" name="header" value="" required >
+                        </div>
+                    <div class="trailer">Trailer:
+                    <input type="text" name="trailer" value="" >
+                    </div>
+                    <div class="filetype">Filetype:
+                    <input  type="text" name="filetype" value="" required >
+                    </div>
+                    <div id = "btn">
+                        <button  class="btnacc"  name="editid" type="submit" style="margin-bottom:2.5em; margin-left: 4em;" value="{{editfile.id}}">Save</button>
+
+                       <div class="btndec" name="cancel" onclick="closeModal();">Cancel</div>
 
                     </div>
                 </form>
@@ -416,6 +446,11 @@
             }
             if(window.location.href.indexOf("selectfileid") != -1) {
                 $("#details").css({"visibility": "visible"})
+
+
+            }
+             if(window.location.href.indexOf("editid") != -1) {
+                 window.location.hash = '#openModal3';
 
 
             }

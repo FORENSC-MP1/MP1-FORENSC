@@ -14,5 +14,8 @@ urlpatterns = [
 
     url(r'^add/$', views.addfile, name='addfsig'),
 
+    url(r'^edit/$', views.editfile, name='editfsig'),
+
+
 
 ]

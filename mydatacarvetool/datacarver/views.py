@@ -11,12 +11,14 @@ def index(request):
     deletefilesig = None
     filesig_id = None
     selectfile = None
+    editid = None
+    editfile = None
 
     if request.method == 'GET':
         filesig_id = request.GET.get('filesigid')
         delete_id = request.GET.get('Yes')
         selectfileid = request.GET.get('selectfileid')
-        print("HI",selectfileid)
+        editid = request.GET.get('editid')
     if filesig_id != None:
         deletefilesig = get_object_or_404(Filesig, pk=filesig_id)
 
@@ -26,6 +28,8 @@ def index(request):
         return redirect("/datacarver/")
     if selectfileid != None:
         selectfile = get_object_or_404(Filesig, pk=selectfileid)
+    if editid != None:
+        editfile = get_object_or_404(Filesig, pk=editid)
 
 
 
@@ -33,6 +37,7 @@ def index(request):
         'all_filesigs': all_filesigs,
         'deletefilesig': deletefilesig,
         'selectfile': selectfile,
+        'editfile': editfile,
 
     }
     return render(request, 'datacarver/index.html', context)
@@ -51,8 +56,10 @@ def recover(request):
     if 'file' in request.POST:
         filecarve =  request.POST.getlist('file')
 
-        #for fileid in filecarve:
-
+        for fileid in filecarve:
+            filetocarve = get_object_or_404(Filesig, pk=fileid)
+            filetocarve.status = 1
+            filetocarve.save()
 
 
     if form.is_valid():
@@ -82,3 +89,25 @@ def addfile(request):
     return redirect("/datacarver/")
 
 
+
+def editfile(request):
+
+    trail = ''
+    editid = None
+    print("HI")
+    if 'editid' in request.POST:
+        editid = request.POST['editid']
+        print(editid)
+    if 'header' in request.POST:
+        head = request.POST['header']
+    if 'trailer' in request.POST:
+        trail = request.POST['trailer']
+    if 'filetype' in request.POST:
+        ftype = request.POST['filetype']
+        if editid != None:
+            newfilesig = get_object_or_404(Filesig, pk=editid)
+            newfilesig.header = head
+            newfilesig.trailer = trail
+            newfilesig.filetype = ftype
+            newfilesig.save()
+    return redirect("/datacarver/")
