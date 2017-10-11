@@ -1,12 +1,39 @@
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404
+
+from django.shortcuts import render, get_object_or_404,redirect
 from .models import Filesig, information
-from django.template import loader
+from .forms import infoForm
+
 
 def index(request):
     all_filesigs = Filesig.objects.all()
+    delete_id = None
+    selectfileid = None
+    deletefilesig = None
+    filesig_id = None
+    selectfile = None
+
+    if request.method == 'GET':
+        filesig_id = request.GET.get('filesigid')
+        delete_id = request.GET.get('Yes')
+        selectfileid = request.GET.get('selectfileid')
+        print("HI",selectfileid)
+    if filesig_id != None:
+        deletefilesig = get_object_or_404(Filesig, pk=filesig_id)
+
+    if delete_id != None:
+        deletefilesig = get_object_or_404(Filesig, pk=delete_id)
+        deletefilesig.delete()
+        return redirect("/datacarver/")
+    if selectfileid != None:
+        selectfile = get_object_or_404(Filesig, pk=selectfileid)
+
+
+
     context = {
         'all_filesigs': all_filesigs,
+        'deletefilesig': deletefilesig,
+        'selectfile': selectfile,
+
     }
     return render(request, 'datacarver/index.html', context)
 
@@ -18,12 +45,29 @@ def detail(request, filesig_id):
 
 
 def recover(request):
-    all_filesigs = Filesig.objects.all()
-    context = {'all_filesigs':all_filesigs}
+    filecarve = []
+
+    form = infoForm(request.POST or None)
+    if 'file' in request.POST:
+        filecarve =  request.POST.getlist('file')
+
+        #for fileid in filecarve:
+
+
+
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+
+    allfilesigs = Filesig.objects.all()
+    context = {'allfilesigs':allfilesigs,
+               'form': form,
+               }
     return render(request, 'datacarver/recover.html', context)
 
 def addfile(request):
     trail=''
+
     if 'header' in request.POST:
         head = request.POST['header']
         
@@ -33,17 +77,8 @@ def addfile(request):
     if 'filetype' in request.POST:
         ftype = request.POST['filetype']
         
-    Filesig.objects.create(header=head, trailer=trail, filetype=ftype)   
-        
-    all_filesigs = Filesig.objects.all()
-    context = {
-        'all_filesigs': all_filesigs,
-    }
-    return render(request, 'datacarver/index.html', context)
-def deletefile(request):
-    
-    filesig = get_object_or_404(Filesig,pk=filesig_id)
-    filesig.delete()
-    prevhttp = request.META.get('HTTP_REFERER')
-    prevhttp.split("?")[0]
-    return HttpResponseRedirect(prevhttp.split("?")[0])
+    Filesig.objects.create(header=head, trailer=trail, filetype=ftype)
+
+    return redirect("/datacarver/")
+
+

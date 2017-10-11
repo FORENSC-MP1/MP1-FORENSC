@@ -3,21 +3,30 @@
     <head>
         <title>Recover Files</title>
     </head>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>-->
+    <script type="text/javascript"src="{{ STATIC_URL }} /static/js/jquery-3.2.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             $(".filechooser").hide();
-
-            $(document).on('click', '#choosebutton', function(){
-                unhide();
+            $(document).on('click','#choosebutton',function(){
+                fileunhide();
             });
 
-        });
+            $(document).on('click','.close', function(){
+                close();
+            });
 
-        function unhide(){
-            $(".recover-container").hide();
-            $(".filechooser").show();
-        }
+            function fileunhide(){
+                $(".recover-container").hide();
+                $(".filechooser").show();
+            }
+
+            function close(){
+                $(".filechooser").hide();
+                $(".recover-container").show();
+            }
+
+        });
 
     </script>
 
@@ -35,6 +44,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            background-color: #333;
 
         }
 
@@ -66,23 +76,102 @@
         }
 
         .container {
+            width:30%;
+            height:70%;
             font-family: Raleway;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            padding-top:3em;
+            margin-top: 3em;
+            margin-left: 35%;
+            color: white;
+            background-color: #878787;
+           box-shadow: -1px 1px 36px 5px rgba(0,0,0,0.75);
+
         }
+        .container div
+        {
+
+            display:flex;
+            flex-direction:row;
+
+        }
+        .container div input
+        {
+            margin-top: -1em;
+        }
+
 
         .buttons {
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            align-self:left;
+            font-family: Raleway;
+            margin-top: 3em;
+            font-weight: bolder;
         }
 
-        .buttons button, .buttons input {
-            margin: 15px;
-            font-family: Raleway;
+        .buttons a, .buttons button
+        {
             cursor: pointer;
+            margin-left:2em;
+
         }
+
+        .filechooser {
+            position: relative;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            background-color: #333;
+        }
+
+        .file-container {
+            background-color:#f4f4f4;
+            margin: 10% auto;
+            max-height: 1000px;
+            max-width: 500px;
+            animation-name: modalopen;
+            animation-duration: 1s;
+            
+        }
+
+        .file-container button {
+            margin: 0 20px 10px 20px;
+            padding: 5px 10px;
+
+        }
+        #modal-container
+        {
+            scroll-behavior: hidden;
+        }
+
+        .checkfile {
+            margin: 20px;
+        }
+
+        .close{
+          float: right;
+          font-size:30px;
+          color: cadetblue;
+          margin-right: 10px;
+        }
+
+        .close:hover,.close:focus{
+          color:#000;
+          text-decoration: none;
+          cursor:pointer;
+        }
+
+        @keyframes modalopen{
+          from{ opacity: 0}
+          to {opacity: 1}
+        }
+
+
     </style>
     <body>
         <div class="navbar-container">
@@ -105,37 +194,44 @@
             </div>
         </div>
         <div class="recover-container">
-            <form>
-                <div class = "container">
-                    <div>Copy From: <br>
-                    <input type="text" name="copy"></div>
+            {% block content %}
+                <form action="" method="POST" class="infoForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="container">
+                        {% for field in form%}
+                        <div>
+                            <label>{{field.label}} : </label>
+                            <div class = "inputF">{{field}}</div>
 
-                    <div>Save To: <br>
-                    <input type="text" name="save"></div>
+                        </div>
+                        {%endfor%}
 
-                    <div>Sectors: <br>
-                    <input type="text" name="sectors"></div>
-
-                    <div>Max File Size: <br>
-                    <input type="text" name="maxsize"></div>
-
-                    <div>Threads: <br>
-                    <input type="text" name="threads"></div>
-
-                    <div>Workers: <br>
-                    <input type="text" name="workers"></div>
-                </div>
-
-                <div class="buttons">
-                    <a href= "#" id="choosebutton"><input type="button" value="Choose File Extension"></a>
-                    <a href="#"><input type="submit" value="Submit"></a>
-                </div>
-            </form>
+                        <div class="buttons">
+                            <a href = "#" id="choosebutton" ><button type="button" value="Choose File Extension">Choose File Extension</button></a>
+                            <button  type="submit" class="button" name="recover" value = "recover" >Recover</button>
+                        </div>
+                    </div>
+                </form>
+            {% endblock %}
         </div>
-        <div class="filechooser">
-            <div class="">
+        <div id="modal" class="filechooser">
+            <form method="POST" >
+                {% csrf_token %}
+            <div id="modal-container" class="file-container">
+                <span class="close">&times;</span>
+                <fieldset class="checkfile">
+                    <legend><h1>Select file extension/s:</h1></legend>
+                    {%for filesig in allfilesigs%}
+                    <div>
+                        <input type="checkbox" name="file" value="{{filesig.id}}" ><label>{{filesig}} File Extension</label>
+                    </div>
+                    {%endfor%}
+                </fieldset>
+                <button  type="submit" value="Submit" onclick="close()">Proceed</button>
 
             </div>
+                </form>
         </div>
     </body>
+
 </html>

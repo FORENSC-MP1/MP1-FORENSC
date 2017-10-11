@@ -1,5 +1,114 @@
-<div>
-    <h1>{{ filesig.filetype }}</h1>
-    <h3>{{ filesig.header }}</h3>
-    <h3>{{ filesig.trailer }}</h3>
-</div>
+{% load static %}
+<html>
+    <head>
+        <title>Data Carver</title>
+    </head>
+
+    <script type="text/javascript"src="{{ STATIC_URL }} /static/js/jquery-3.2.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+
+    <style>
+        @font-face {
+            font-family: "Raleway";
+            src: url("fonts/Raleway.ttf");
+        }
+
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #333;
+
+        }
+
+        .leftnav .contents {
+            display: flex;
+            flex-direction: row;
+            justify-contents: flex-start;
+            text-decoration: none;
+            background-color: cadetblue;
+
+        }
+
+        .contents div {
+            margin: 10px 15px;
+        }
+
+        .contents a {
+            text-decoration: none;
+            color: black;
+            font-family: "Raleway";
+        }
+
+        .contents a:hover {
+            color: white;
+        }
+
+        .container ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            list-style-type: none;
+            flex-wrap: wrap;
+        }
+
+        .container ul li {
+            margin: 10px;
+            background-color: cadetblue;
+            padding: 20px;
+        }
+
+        .container ul li:hover {
+            background-color: black;
+        }
+
+        .container ul li a {
+            text-decoration: none;
+            font-family: "Raleway";
+            font-weight: bold;
+            color: white;
+        }
+
+
+    </style>
+
+    <body>
+
+    <div class="navbar-container">
+        <div class="navbar">
+            <div class="leftnav">
+                <div class="contents">
+                    <a href="/datacarver/recover/"><div>
+                    Recover
+                    </div></a>
+                    <a href="/datacarver/"><div>
+                    View All
+                    </div></a>
+                    <a href="#openModal1" onclick=><div>
+                    Add Files
+                    </div></a>
+                </div>
+            </div>
+            <div class="rightnav">
+
+            </div>
+
+        </div>
+    </div>
+
+
+    </body>
+
+    <script>
+        function closeModal()
+        {
+            $(".details").hide()
+        }
+    </script>
+
+</html>
+
+

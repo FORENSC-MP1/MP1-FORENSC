@@ -10,7 +10,7 @@ class Filesig(models.Model):
     pub_date = models.DateTimeField(auto_now_add = True)
     
     def __str__(self):
-        return self.filetype
+        return self.filetype.upper().replace(".","")
 
 class information(models.Model):
     dircopy = models.CharField(max_length=50)
@@ -18,12 +18,17 @@ class information(models.Model):
     sector = models.IntegerField(default=512)
     maxsize = models.IntegerField(default=10000000, 
                                   validators=[
-                                      MaxValueValidator(50000000),
-                                      MinValueValidator(1000)
+                                      MaxValueValidator(5000000000),
+                                      MinValueValidator(1)
                                   ])
-    threads = models.IntegerField(default=100,validators=[
+    nMax = models.IntegerField(default=1000000,
+                                  validators=[
+                                      MaxValueValidator(125000000),
+                                      MinValueValidator(1)
+                                  ])
+    threads = models.IntegerField(default=10,validators=[
                                      MinValueValidator(10)
                                   ])
-    workers = models.IntegerField(default=100,validators=[
+    workers = models.IntegerField(default=10,validators=[
                                      MinValueValidator(10)
                                   ])

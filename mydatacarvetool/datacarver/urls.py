@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^recover/$', views.recover, name='recover'),
 
     url(r'^add/$', views.addfile, name='addfsig'),
-    url(r'^delete/$', views.deletefile, name='deletefsig'),
+
+
 ]
