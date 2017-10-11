@@ -61,7 +61,6 @@ def recover(request):
             filetocarve.status = 1
             filetocarve.save()
 
-
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
@@ -111,3 +110,4 @@ def editfile(request):
             newfilesig.filetype = ftype
             newfilesig.save()
     return redirect("/datacarver/")
+
