@@ -27,8 +27,8 @@ class information(models.Model):
                                       MinValueValidator(1)
                                   ])
     threads = models.IntegerField(default=10,validators=[
-                                     MinValueValidator(10)
+                                     MinValueValidator(1)
                                   ])
     workers = models.IntegerField(default=10,validators=[
-                                     MinValueValidator(10)
+                                     MinValueValidator(1)
                                   ])

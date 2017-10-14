@@ -11,11 +11,13 @@
             $(document).on('click','#choosebutton',function(){
                 fileunhide();
             });
+            $(document).on('click','#recoverbutton',function(){
+                closeContainer();
+            });
 
             $(document).on('click','.close', function(){
                 close();
             });
-
             function fileunhide(){
                 $(".recover-container").hide();
                 $(".filechooser").show();
@@ -32,10 +34,6 @@
 
     <style>
 
-         @font-face {
-            font-family: Raleway;
-            src: url("fonts/Raleway.ttf");
-        }
 
         body {
             overflow-x: hidden;
@@ -111,10 +109,10 @@
             font-weight: bolder;
         }
 
-        .buttons a, .buttons button
+        .buttons a
         {
             cursor: pointer;
-            margin-left:2em;
+            margin-left:3em;
 
         }
 
@@ -325,7 +323,7 @@
         </div>
         <div class="recover-container">
             {% block content %}
-                <form action="" method="POST" class="infoForm" enctype="multipart/form-data">
+                <form  method="POST" class="infoForm" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="container">
                         {% for field in form%}
@@ -337,8 +335,8 @@
                         {%endfor%}
 
                         <div class="buttons">
-                            <a href = "#" id="choosebutton" ><button type="button" type="submit" name="reset" value="reset">Choose File Extension</button></a>
-                            <button  type="submit" name="recover" value = "recover" >Recover</button>
+                            <a href = "#" id="choosebutton" ><button type="button" >Choose File Extension</button></a>
+                            <a><button type="submit" name="recoverer" value = "recoverer" >Recover</button></a>
                         </div>
                     </div>
                 </form>

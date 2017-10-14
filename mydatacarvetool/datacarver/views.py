@@ -3,6 +3,17 @@ from django.shortcuts import render, get_object_or_404,redirect
 from .models import Filesig, information
 from .forms import infoForm
 
+# This is the sample tutorial created during FORENSC class AY1718 of DLSU CCS CT
+from queue import Queue
+import time
+from threading import Thread
+import os
+import sys
+
+os.system('cls') # Clear Screen
+q = Queue(10)
+import threading
+
 
 def index(request):
     all_filesigs = Filesig.objects.all()
@@ -60,15 +71,21 @@ def recover(request):
             filetocarve = get_object_or_404(Filesig, pk=fileid)
             filetocarve.status = 1
             filetocarve.save()
+            all_filesigs = Filesig.objects.all()
 
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        #insert the data carve function
+        print("CARVE ME")
+        informData = information.objects.all()
+        return render(request, 'datacarver/carvermenu.html', {'informData': informData, })
 
     allfilesigs = Filesig.objects.all()
     context = {'allfilesigs':allfilesigs,
                'form': form,
                }
+
     return render(request, 'datacarver/recover.html', context)
 
 def addfile(request):
@@ -111,3 +128,50 @@ def editfile(request):
             newfilesig.save()
     return redirect("/datacarver/")
 
+def carverMenu(request):
+
+    return render(request, 'datacarver/carvermenu.html',context)
+
+def worker():
+    while True:
+        #print("Waiting for image\n")
+        item = q.get()
+        #print("get Item\n")
+        if item is None:
+            q.task_done()
+            break
+        #print("PROCESSING ",item[4],"\n")
+        save(item[0],item[1],item[2],item[3],item[4])
+        q.task_done()
+	
+def save(startfile, size, imagectr, pathtosave,filetype):
+    image = open(pathtosave+":\\"+filetype.replace(".","")+"\\" + str(imagectr) + filetype,"wb")
+    drive.seek(startfile)
+    image.write(drive.read(size))
+    image.close()
+    
+def carverMain(request):
+    informData = information.objects.last()
+    filetocarve = Filesig.objects.filter(status="1")
+    for file in filetocarve:
+        print(file.filetype)
+    print(informData.dircopy,informData.dirsave)
+    
+    try:
+        path = informData.dircopy
+        pathtosave = informData.dirsave
+        drive = open("\\\\.\\"+path+":", 'rb') # opens the drive D folder in windows. Use /dev/sdb for linux and /dev/disk1 for Mac
+        newpath = pathtosave+":\\jpg" #pathtosave+":\\"+ filetype.replace(".", "")
+        if not os.path.isdir(newpath):
+            os.mkdir(newpath)
+        
+            
+        
+    except KeyboardInterrupt:
+        print ("Program interrupted. Ctrl+C pressed. Exiting.")
+        sys.exit()
+    except IOError as e:
+        print(e)
+        sys.exit()
+    print("HELasddasdaO")
+    return render(request, 'datacarver/carvermain.html')

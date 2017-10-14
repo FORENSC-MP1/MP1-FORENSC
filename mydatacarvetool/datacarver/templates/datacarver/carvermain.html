@@ -1,0 +1,73 @@
+{% load static %}
+<html>
+    <head>
+        <title>Carver Main</title>
+    </head>
+
+    <script type="text/javascript"src="{{ STATIC_URL }} /static/js/jquery-3.2.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+
+    <style>
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #333;
+
+        }
+
+        .leftnav .contents {
+            display: flex;
+            flex-direction: row;
+            justify-contents: flex-start;
+            text-decoration: none;
+            background-color: cadetblue;
+
+        }
+
+        .contents div {
+            margin: 10px 15px;
+        }
+
+        .contents a {
+            text-decoration: none;
+            color: black;
+            font-family: "Raleway";
+        }
+
+        .contents a:hover {
+            color: white;
+        }
+        h2 {
+            background-color: white;
+        }
+    </style>
+
+<body>
+
+    <div class="navbar-container">
+        <div class="navbar">
+            <div class="leftnav">
+                <div class="contents">
+                    <a href="/datacarver/recover/"><div>
+                    Recover
+                    </div></a>
+                    <a href="/datacarver/"><div>
+                    View All
+                    </div></a>
+                    <a href="#openModal1" onclick=><div>
+                    Add Files
+                    </div></a>
+                </div>
+            </div>
+            <div class="rightnav">
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

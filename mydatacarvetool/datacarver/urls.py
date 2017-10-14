@@ -16,6 +16,8 @@ urlpatterns = [
 
     url(r'^edit/$', views.editfile, name='editfsig'),
 
+    url(r'^carvermenu/$', views.carverMenu, name='carvermenu'),
 
+    url(r'^carvermain/$', views.carverMain, name='carvermain'),
 
 ]
